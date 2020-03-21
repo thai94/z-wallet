@@ -1,4 +1,6 @@
 package com.wallet.user.verifypin;
 
-public class VerifyPinResponse {
+import com.wallet.entity.BaseResponse;
+
+public class VerifyPinResponse extends BaseResponse {
 }
