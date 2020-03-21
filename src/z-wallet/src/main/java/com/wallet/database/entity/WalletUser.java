@@ -15,8 +15,6 @@ public class WalletUser {
     @Id
     @Column(name = "user_id")
     public String userId;
-    @Column(name = "password")
-    public String password;
     @Column(name = "phone")
     public String phone;
     @Column(name = "address")

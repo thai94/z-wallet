@@ -8,6 +8,6 @@ import java.util.Date;
 @Data
 public class UserRegisterRequest implements Serializable {
     public String fullname;
-    public String password;
+    public String pin;
     public String phone;
 }

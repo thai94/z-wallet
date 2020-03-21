@@ -5,10 +5,7 @@ import com.wallet.database.entity.WalletUser;
 import com.wallet.database.repository.WalletUserRespository;
 import com.wallet.entity.BaseResponse;
 import com.wallet.utils.GenId;
-import com.wallet.utils.OtpUtils;
-import net.bytebuddy.asm.Advice;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,8 +28,8 @@ public class UserResgisterController {
                 return response;
             }
 
-            if (StringUtils.isEmpty(dataRequest.password)) {
-                response.returncode = ErrorCode.VALIDATE_PASSWORD_INVALID.getValue();
+            if (StringUtils.isEmpty(dataRequest.pin) || dataRequest.pin.length() != 6) {
+                response.returncode = ErrorCode.VALIDATE_PIN_INVALID.getValue();
                 return response;
             }
 
@@ -50,7 +47,7 @@ public class UserResgisterController {
 
             walletUser.userId = GenId.genId();
             walletUser.fullName = dataRequest.fullname;
-            walletUser.password = dataRequest.password;
+            walletUser.pin = dataRequest.pin;
             walletUser.phone = dataRequest.phone;
 
             walletUserRespository.save(walletUser);
