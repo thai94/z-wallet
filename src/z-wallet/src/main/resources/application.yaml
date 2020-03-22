@@ -13,3 +13,13 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MySQLDialect
+bank:
+    connector:
+        msb:
+            base-url: http://localhost:8081
+            link-method: /msb/link
+            un-link-method: msb/un-link
+            pay-method: /msb/pay
+            cash-in-method: /msb/cash-in
+            cash-out-method: /msb/cash-out
+            bank-name: MSB
