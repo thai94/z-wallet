@@ -23,3 +23,7 @@ bank:
             cash-in-method: /msb/cash-in
             cash-out-method: /msb/cash-out
             bank-name: MSB
+wallet:
+    base-url: http://localhost:8080
+    add-cash-method: /wallet/add-cash
+    sub-tract-cash-method: /wallet/subtract-cash
