@@ -1,0 +1,485 @@
+{
+	"info": {
+		"_postman_id": "da78658d-9b79-4efa-821a-6b19f6f0943a",
+		"name": "zwallet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"fullname\": \"Nguyen Quoc Thai\",\r\n\"pin\": \"123456\",\r\n\"phone\":\"0365535079\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/um/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"um",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"phone\":\"0365535079\",\n\t\"pin\":\"123456\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/um/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"um",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verify-pin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"pin\":\"1234562\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/um/verify-pin",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"um",
+						"verify-pin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add-cash",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userid\":\"1212121212\",\n\t\"amount\":\"100\",\n\t\"transactionid\":\"1212121244\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/wallet/add-cash",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"wallet",
+						"add-cash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "subtract-cash",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userid\":\"1212121212\",\n\t\"amount\":\"100\",\n\t\"transactionid\":\"1212121254\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/wallet/subtract-cash",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"wallet",
+						"subtract-cash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-balance",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userid\":\"1212121212\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/wallet/get-balance",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"wallet",
+						"get-balance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "msb-pay",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"banktoken\": \"123\",\n\t\"cardnumber\": \"5019717010103742\",\n\t\"transactionid\": \"7\",\n\t\"amount\": \"100\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/msb/pay",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"msb",
+						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "msb-link",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"cardnumber\":\"5019717010103742\",\n\t\"cmnd\":\"312198889\",\n\t\"fullname\":\"NGUYEN VAN A\",\n\t\"phone\":\"0365590786\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/msb/link",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"msb",
+						"link"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "msb-un-link",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"cardnumber\":\"5019717010103742\",\n\t\"cmnd\":\"312198889\",\n\t\"banktoken\":\"0365590786:a134354ff7dbe49\",\n\t\"phone\":\"0365590786\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/msb/un-link",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"msb",
+						"un-link"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "msb-cash-in",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"banktoken\":\"0365590786:a134354ff7dbe49\",\n\t\"cardnumber\":\"5019717010103742\",\n\t\"transactionid\":\"12\",\n\t\"amount\":\"99999999\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/msb/cash-in",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"msb",
+						"cash-in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "msb-cash-out",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"banktoken\": \"0365590786:a134354ff7dbe49\",\n\t\"cardnumber\": \"5019717010103742\",\n\t\"transactionid\": \"7\",\n\t\"amount\": \"100\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8081/msb/cash-out",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"msb",
+						"cash-out"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bank-mapping-link",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"bankcode\":\"msb\",\n\t\"cardno\":\"5019717010103742\",\n\t\"fullname\":\"NGUYEN VAN A\",\n\t\"cmnd\":\"312198889\",\n\t\"phone\":\"0365590786\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/bank-mapping/link",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bank-mapping",
+						"link"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bank-mapping-unlink",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"f6cardno\": \"501971\",\n\t\"l4cardno\":\"3742\",\n\t\"bankcode\":\"msb\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/bank-mapping/unlink",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bank-mapping",
+						"unlink"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bank-mapping-list",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userid\":\"1584784717714\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/bank-mapping/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bank-mapping",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "charge-order-submit-trans-by-wallet",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"5\",\n\t\"sourceoffund\":\"1\",\n\t\"bankcode\":\"\",\n\t\"f6cardno\":\"\",\n\t\"l4cardno\":\"\",\n\t\"amount\":\"100\",\n\t\"pin\":\"123456\",\n\t\"servicetype\":\"1\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/charge-order/submit-trans",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"charge-order",
+						"submit-trans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "charge-order-submit-trans-by-atm",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"34434338\",\n\t\"sourceoffund\":\"2\",\n\t\"bankcode\":\"msb\",\n\t\"f6cardno\":\"501971\",\n\t\"l4cardno\":\"3742\",\n\t\"amount\":\"100\",\n\t\"pin\":\"123456\",\n\t\"servicetype\":\"1\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/charge-order/submit-trans",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"charge-order",
+						"submit-trans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "charge-order-history",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"starttime\":\"1584882829859\",\n\t\"pagesize\":\"10\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/charge-order/history",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"charge-order",
+						"history"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

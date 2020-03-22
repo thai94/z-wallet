@@ -12,7 +12,7 @@ Huong dan cai dat:
 - Donwload intellij IDE (https://www.jetbrains.com/idea/download/#section=windows)
 - Import into intellij IDE
 - Run: Right click on file: BankMsbApplication then choose RUN
--Run: Right click on file: ZWalletApplication then choose RUN
+- Run: Right click on file: ZWalletApplication then choose RUN
 
 ## 3. Test API
 - Using: PostMan (https://www.postman.com/downloads/)
