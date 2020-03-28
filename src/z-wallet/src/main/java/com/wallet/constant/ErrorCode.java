@@ -2,6 +2,7 @@ package com.wallet.constant;
 
 public enum  ErrorCode {
 
+    PROCESSING(2),
     SUCCESS(1),
     EXCEPTION(0),
     // -1 -> -100 validate
@@ -27,7 +28,10 @@ public enum  ErrorCode {
     USER_PIN_WRONG(-102),
     BALANCE_NOT_ENOUGHT(-103),
     USER_HAS_NOT_MAPPING_YET(-104),
-    DUPLICATE_TRANSACTION(-105);
+    DUPLICATE_TRANSACTION(-105),
+    CHECK_BANK_NOT_SUPPORT(-106),
+    CHECK_AMOUNT_LIMITATION(-107),
+    CHECK_ORDER_NOT_FOUND_ON_CACHE(-108);
 
     private int value;
     ErrorCode(int value){

@@ -13,6 +13,10 @@ spring:
         properties:
             hibernate:
                 dialect: org.hibernate.dialect.MySQLDialect
+    redis:
+        client-name: zwallet
+        host: 10.0.0.200
+        port: 6379
 bank:
     connector:
         msb:
