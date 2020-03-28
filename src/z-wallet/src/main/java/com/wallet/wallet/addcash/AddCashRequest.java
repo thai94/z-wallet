@@ -8,5 +8,5 @@ import java.io.Serializable;
 public class AddCashRequest implements Serializable {
     public String userid;
     public Long amount;
-    public long transactionid;
+    public Long transactionid;
 }

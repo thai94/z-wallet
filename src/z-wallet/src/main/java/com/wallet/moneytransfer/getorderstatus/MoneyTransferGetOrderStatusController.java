@@ -1,7 +1,7 @@
-package com.wallet.cashin.getstatus;
+package com.wallet.moneytransfer.getorderstatus;
 
-import com.wallet.cache.entity.WalletTopupEntity;
-import com.wallet.cache.repository.WalletTopupCacheRepository;
+import com.wallet.cache.entity.MoneyTransferEntity;
+import com.wallet.cache.repository.MoneyTransferCacheRepository;
 import com.wallet.constant.ErrorCode;
 import com.wallet.entity.BaseResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-public class WalletTopupGetStatusController {
+public class MoneyTransferGetOrderStatusController {
 
     @Autowired
-    WalletTopupCacheRepository walletTopupRepository;
+    MoneyTransferCacheRepository moneyTransferCacheRepository;
 
-    @PostMapping("/wallet-topup/order-status")
-    public BaseResponse withdrawStatus(@RequestBody WalletTopupGetStatusRequest request) {
-        WalletTopupGetStatusResponse response = new WalletTopupGetStatusResponse();
+    @PostMapping("/p2p-transfer/order-status")
+    public BaseResponse getOrderStatus(@RequestBody MoneyTransferGetOrderStatusRequest request) {
+        MoneyTransferGetOrderStatusResponse response = new MoneyTransferGetOrderStatusResponse();
         try {
             if(StringUtils.isEmpty(request.userid)) {
                 response.returncode = ErrorCode.VALIDATE_USER_ID_INVALID.getValue();
@@ -32,13 +32,13 @@ public class WalletTopupGetStatusController {
                 return response;
             }
 
-            Optional<WalletTopupEntity> orderEntityOptional = walletTopupRepository.findById(request.orderid);
-            if(!orderEntityOptional.isPresent()) {
+            Optional<MoneyTransferEntity> moneyTransferEntityOptional = moneyTransferCacheRepository.findById(request.orderid);
+            if(!moneyTransferEntityOptional.isPresent()) {
                 response.returncode = ErrorCode.CHECK_ORDER_NOT_FOUND_ON_CACHE.getValue();
                 return response;
             }
 
-            response.returncode = orderEntityOptional.get().getStatus();
+            response.returncode = moneyTransferEntityOptional.get().getStatus();
             return response;
         } catch (Exception ex) {
             ex.printStackTrace();
