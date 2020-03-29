@@ -6,11 +6,24 @@ Install guide
 - https://docs.docker.com/install/
 - https://docs.docker.com/compose/install/
 
+### 2. Build service
+- Install maven: http://maven.apache.org/install.html
+- Open folder: \z-wallet\src\z-wallet\
+- Open command-line
+- Run command: mvn package
+
+- Open folder: \z-wallet\src\bank-msb\
+- Open command-line
+- Run command: mvn package
 ### 2. Run service
 - Open folder: \z-wallet\src
-- Open command line
+- Open command-line
 - Run command: sudo docker-compose build
 - Run command: sudo docker-compose up
+
+### Service informatin
+- Database: your-ip:3307
+- Z-Wallet service: your-ip:8080
 _________________________________________________________________
 ## Develop Install
 ### 1. Import databse vao mysql
