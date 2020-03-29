@@ -409,12 +409,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"5\",\n\t\"sourceoffund\":\"1\",\n\t\"bankcode\":\"\",\n\t\"f6cardno\":\"\",\n\t\"l4cardno\":\"\",\n\t\"amount\":\"100\",\n\t\"pin\":\"123456\",\n\t\"servicetype\":\"1\"\n}"
+					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1585459513151\",\n\t\"sourceoffund\":\"1\",\n\t\"bankcode\":\"\",\n\t\"f6cardno\":\"\",\n\t\"l4cardno\":\"\",\n\t\"amount\":\"100000\",\n\t\"pin\":\"123456\",\n\t\"servicetype\":\"1\"\n}"
 				},
 				"url": {
-					"raw": "localhost:8080/charge-order/submit-trans",
+					"raw": "10.0.0.200:8080/charge-order/submit-trans",
 					"host": [
-						"localhost"
+						"10",
+						"0",
+						"0",
+						"200"
 					],
 					"port": "8080",
 					"path": [
@@ -437,7 +440,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"34434338\",\n\t\"sourceoffund\":\"2\",\n\t\"bankcode\":\"msb\",\n\t\"f6cardno\":\"501971\",\n\t\"l4cardno\":\"3742\",\n\t\"amount\":\"100\",\n\t\"pin\":\"123456\",\n\t\"servicetype\":\"1\"\n}"
+					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1585450959375\",\n\t\"sourceoffund\":\"2\",\n\t\"bankcode\":\"msb\",\n\t\"f6cardno\":\"501971\",\n\t\"l4cardno\":\"3742\",\n\t\"amount\":\"100\",\n\t\"pin\":\"123456\",\n\t\"servicetype\":\"2\"\n}"
 				},
 				"url": {
 					"raw": "localhost:8080/charge-order/submit-trans",
@@ -496,9 +499,12 @@
 					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"f6cardno\":\"501971\",\n\t\"l4cardno\":\"3742\",\n\t\"bankcode\":\"msb\",\n\t\"amount\":\"100000\"\n}"
 				},
 				"url": {
-					"raw": "localhost:8080/withdraw/create-order",
+					"raw": "10.0.0.200:8080/withdraw/create-order",
 					"host": [
-						"localhost"
+						"10",
+						"0",
+						"0",
+						"200"
 					],
 					"port": "8080",
 					"path": [
@@ -521,12 +527,15 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1585390895990\"\n}"
+					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1585459513151\"\n}"
 				},
 				"url": {
-					"raw": "localhost:8080/withdraw/order-status",
+					"raw": "10.0.0.200:8080/withdraw/order-status",
 					"host": [
-						"localhost"
+						"10",
+						"0",
+						"0",
+						"200"
 					],
 					"port": "8080",
 					"path": [
@@ -606,7 +615,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1585390573726\"\n}"
+					"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1585450959375\"\n}"
 				},
 				"url": {
 					"raw": "localhost:8080/wallet-topup/order-status",
