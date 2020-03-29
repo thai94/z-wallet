@@ -32,7 +32,9 @@ public enum  ErrorCode {
     CHECK_BANK_NOT_SUPPORT(-106),
     CHECK_AMOUNT_LIMITATION(-107),
     CHECK_ORDER_NOT_FOUND_ON_CACHE(-108),
-    CHECK_USER_DOES_NOT_EXIST(-109);
+    CHECK_USER_DOES_NOT_EXIST(-109),
+    CHECK_SERVICE_DOES_NOT_EXIST(-110),
+    CALL_BACK_FAIL(-111);
 
     private int value;
     ErrorCode(int value){

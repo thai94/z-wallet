@@ -31,3 +31,14 @@ wallet:
     base-url: http://localhost:8080
     add-cash-method: /wallet/add-cash
     sub-tract-cash-method: /wallet/subtract-cash
+callback:
+    service:
+        cashin:
+            base-url: http://localhost:8080
+            callback-method: /wallet-topup/callback
+        cashout:
+            base-url: http://localhost:8080
+            callback-method: /withdraw/callback
+        moneytransfer:
+            base-url: http://localhost:8080
+            callback-method: /p2p-transfer/callback

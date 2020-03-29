@@ -5,10 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Data
-@Configuration
-@ConfigurationProperties(prefix = "wallet")
-public class WalletConfig {
+public class CallbackConfig {
     public String baseUrl;
-    public String addCashMethod;
-    public String subTractCashMethod;
+    public String callbackMethod;
 }

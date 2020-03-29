@@ -8,7 +8,7 @@ import com.wallet.database.entity.WalletUser;
 import com.wallet.database.repository.MoneyTransferOrderRepository;
 import com.wallet.database.repository.WalletUserRespository;
 import com.wallet.entity.BaseResponse;
-import com.wallet.properties.WalletConfig;
+import com.wallet.properties.WalletProperties;
 import com.wallet.wallet.addcash.AddCashRequest;
 import com.wallet.wallet.addcash.AddCashResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class MoneyTransferCallbackController {
     MoneyTransferOrderRepository moneyTransferOrderRepository;
 
     @Autowired
-    WalletConfig walletConfig;
+    WalletProperties walletConfig;
 
     @PostMapping("/p2p-transfer/callback")
     public BaseResponse callback(@RequestBody MoneyTransferCallbackRequest request) {

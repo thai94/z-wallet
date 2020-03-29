@@ -1,7 +1,7 @@
 package com.wallet.pay.submittran;
 
-import com.wallet.bankmapping.list.BankInfo;
 import com.wallet.constant.ErrorCode;
+import com.wallet.constant.Service;
 import com.wallet.database.entity.BankMapping;
 import com.wallet.database.entity.Transaction;
 import com.wallet.database.entity.WalletUser;
@@ -9,15 +9,10 @@ import com.wallet.database.repository.BankMappingRespository;
 import com.wallet.database.repository.TransactionRespository;
 import com.wallet.database.repository.WalletUserRespository;
 import com.wallet.entity.BaseResponse;
-import com.wallet.properties.BankConfig;
-import com.wallet.properties.BankProperties;
-import com.wallet.properties.WalletConfig;
+import com.wallet.properties.*;
 import com.wallet.utils.GenId;
-import com.wallet.wallet.addcash.AddCashRequest;
 import com.wallet.wallet.subtractcash.SubtractCashRequest;
 import com.wallet.wallet.subtractcash.SubtractCashResponse;
-import jdk.nashorn.internal.runtime.options.Option;
-import net.bytebuddy.asm.Advice;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +32,7 @@ public class SubmitTransController {
     WalletUserRespository walletUserRespository;
 
     @Autowired
-    WalletConfig walletConfig;
+    WalletProperties walletConfig;
 
     @Autowired
     BankProperties bankProperties;
@@ -47,6 +42,9 @@ public class SubmitTransController {
 
     @Autowired
     TransactionRespository transactionRespository;
+
+    @Autowired
+    CallbackProperties callbackProperties;
 
     @PostMapping("/charge-order/submit-trans")
     public BaseResponse submitTrans(@RequestBody SubmitTransRequest request) {
@@ -98,6 +96,12 @@ public class SubmitTransController {
 
             if(StringUtils.isEmpty(request.pin)) {
                 response.returncode = ErrorCode.VALIDATE_PIN_INVALID.getValue();
+                return response;
+            }
+
+            Service service = Service.find(request.servicetype);
+            if(service == null) {
+                response.returncode = ErrorCode.CHECK_SERVICE_DOES_NOT_EXIST.getValue();
                 return response;
             }
 
@@ -154,9 +158,33 @@ public class SubmitTransController {
                 transaction.status = responseEntity.getBody().getReturncode() == 1 ? 1: 0;
                 transactionRespository.save(transaction);
 
-                response.returncode = responseEntity.getBody().getReturncode();
-                return response;
+                if(responseEntity.getBody().getReturncode() != 1) {
+                    response.returncode = responseEntity.getBody().getReturncode();
+                    return response;
+                }
 
+                // do callback
+
+                CallbackConfig callbackConfig = callbackProperties.service.get(service.getValue());
+                CallbackRequest callbackRequest = new CallbackRequest();
+                callbackRequest.userid = request.userid;
+                callbackRequest.transactionid = Long.valueOf(transactionId);
+                callbackRequest.orderid = String.valueOf(request.orderid);
+
+                ResponseEntity<CallbackResponse> callbackResponseResponseEntity = restTemplate.postForEntity(callbackConfig.baseUrl + callbackConfig.callbackMethod, callbackRequest, CallbackResponse.class);
+                if(callbackResponseResponseEntity.getStatusCode() != HttpStatus.OK) {
+
+                    response.returncode = ErrorCode.CALL_BACK_FAIL.getValue();
+                    return response;
+                }
+
+                if(callbackResponseResponseEntity.getBody().returncode != 1) {
+                    response.returncode = callbackResponseResponseEntity.getBody().returncode;
+                    return response;
+                }
+
+                response.returncode = ErrorCode.SUCCESS.getValue();
+                return response;
             } else {
                 // pay for bank
                 BankConfig bankConfig = bankProperties.getConnector().get(request.bankcode);
@@ -197,8 +225,32 @@ public class SubmitTransController {
                 transaction.status = responseEntity.getBody().getReturncode() == 1? 1: 0;
                 transactionRespository.save(transaction);
 
+                if(responseEntity.getBody().getReturncode() != 1) {
+                    response.returncode = responseEntity.getBody().getReturncode();
+                    return response;
+                }
+
+                // do callback
+
+                CallbackConfig callbackConfig = callbackProperties.service.get(service.getValue());
+                CallbackRequest callbackRequest = new CallbackRequest();
+                callbackRequest.userid = request.userid;
+                callbackRequest.transactionid = Long.valueOf(transactionId);
+                callbackRequest.orderid = String.valueOf(request.orderid);
+
+                ResponseEntity<CallbackResponse> callbackResponseResponseEntity = restTemplate.postForEntity(callbackConfig.baseUrl + callbackConfig.callbackMethod, callbackRequest, CallbackResponse.class);
+                if(callbackResponseResponseEntity.getStatusCode() != HttpStatus.OK) {
+
+                    response.returncode = ErrorCode.CALL_BACK_FAIL.getValue();
+                    return response;
+                }
+
+                if(callbackResponseResponseEntity.getBody().returncode != 1) {
+                    response.returncode = callbackResponseResponseEntity.getBody().returncode;
+                    return response;
+                }
+
                 response.returncode = ErrorCode.SUCCESS.getValue();
-                response.bankreturncode = responseEntity.getBody().getReturncode();
                 return response;
             }
         } catch (Exception ex) {
