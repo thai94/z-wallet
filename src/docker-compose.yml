@@ -8,6 +8,10 @@ services:
         ports: 
             - "8080:8080"
         restart: always
+        depends_on:
+            - msbbank
+            - database
+            - cache
         networks:
             wallet-network:
                 aliases:
@@ -20,6 +24,8 @@ services:
         ports: 
             - "8081:8081"
         restart: always
+        depends_on:
+            - database
         networks:
             wallet-network:
                 aliases:
@@ -28,6 +34,8 @@ services:
         container_name: zwallet-database
         image: mysql
         restart: always
+        ports: 
+            - "3307:3306"
         environment:
             MYSQL_ROOT_PASSWORD: admin
         volumes:

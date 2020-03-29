@@ -4,8 +4,8 @@ spring:
     datasource:
         url: jdbc:mysql://database-network:3306/z_wallet
         driver-class-name: com.mysql.jdbc.Driver
-        username: admin
-        password: 12345678
+        username: root
+        password: admin
     jpa:
         show-sql: true
         hibernate:
