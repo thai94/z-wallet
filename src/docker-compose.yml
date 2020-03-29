@@ -1,0 +1,48 @@
+version: '3.5'
+services:
+    zwallet:
+        container_name: zwallet-api
+        build: 
+            context: ./z-wallet/
+            dockerfile: Dockerfile
+        ports: 
+            - "8080:8080"
+        restart: always
+        networks:
+            wallet-network:
+                aliases:
+                  - z-wallet-network
+    msbbank:
+        container_name: bank-msb-api
+        build: 
+            context: ./bank-msb/
+            dockerfile: Dockerfile
+        ports: 
+            - "8081:8081"
+        restart: always
+        networks:
+            wallet-network:
+                aliases:
+                  - msb-bank-network
+    database:
+        container_name: zwallet-database
+        image: mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: admin
+        volumes:
+            - ./db/:/docker-entrypoint-initdb.d
+        networks:
+            wallet-network:
+                aliases:
+                  - database-network
+    cache:
+        container_name: zwallet-cache
+        image: redis
+        restart: always
+        networks:
+            wallet-network:
+                aliases:
+                  - cache-network
+networks:
+  wallet-network:
