@@ -1,7 +1,6 @@
 package com.wallet.constant;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public enum Service {

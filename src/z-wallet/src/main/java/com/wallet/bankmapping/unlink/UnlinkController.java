@@ -1,17 +1,13 @@
 package com.wallet.bankmapping.unlink;
 
-import com.wallet.bankmapping.link.BankLinkRequest;
-import com.wallet.bankmapping.link.BankLinkResponse;
 import com.wallet.constant.ErrorCode;
 import com.wallet.database.entity.BankMapping;
-import com.wallet.database.entity.BankMappingId;
 import com.wallet.database.entity.WalletUser;
 import com.wallet.database.repository.BankMappingRespository;
 import com.wallet.database.repository.WalletUserRespository;
 import com.wallet.entity.BaseResponse;
 import com.wallet.properties.BankConfig;
 import com.wallet.properties.BankProperties;
-import jdk.nashorn.internal.runtime.options.Option;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

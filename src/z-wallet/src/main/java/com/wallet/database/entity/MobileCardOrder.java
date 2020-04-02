@@ -8,19 +8,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "withdraw_order")
+@Table(name = "mobile_card_order")
 @Data
-public class WithdrawOrder {
+public class MobileCardOrder {
 
     @Id
     @Column(name = "order_id")
     public long orderId;
-    @Column(name = "f6cardno")
-    public String f6cardno;
-    @Column(name = "l4cardno")
-    public String l4cardno;
     @Column(name = "amount")
     public long amount;
-    @Column(name = "bankcode")
-    public String bankcode;
+    @Column(name = "card_type")
+    public String cardType;
+    @Column(name = "phone")
+    public String phone;
 }

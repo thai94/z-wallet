@@ -1,8 +1,6 @@
 package com.wallet.user.login;
 
-import com.wallet.entity.BaseResponse;
 import lombok.Data;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.Serializable;
 

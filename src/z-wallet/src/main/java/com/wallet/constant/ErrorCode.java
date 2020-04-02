@@ -22,6 +22,7 @@ public enum  ErrorCode {
     VALIDATE_ORDER_ID_INVALID(-14),
     VALIDATE_SOURCE_OF_FUN_INVALID(-15),
     VALIDATE_SERVICE_TYPE_INVALID(-16),
+    VALIDATE_CARD_TYPE_INVALID(-17),
 
     // -101 -> -200 BUS
     USER_PASSWORD_WRONG(-101),
@@ -34,7 +35,8 @@ public enum  ErrorCode {
     CHECK_ORDER_NOT_FOUND_ON_CACHE(-108),
     CHECK_USER_DOES_NOT_EXIST(-109),
     CHECK_SERVICE_DOES_NOT_EXIST(-110),
-    CALL_BACK_FAIL(-111);
+    CALL_BACK_FAIL(-111),
+    CHECK_CARD_NOT_AVALIBLE(-112);
 
     private int value;
     ErrorCode(int value){

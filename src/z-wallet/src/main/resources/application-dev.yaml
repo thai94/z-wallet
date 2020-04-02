@@ -42,3 +42,6 @@ callback:
         moneytransfer:
             base-url: http://localhost:8080
             callback-method: /p2p-transfer/callback
+        mobilecard:
+            base-url: http://localhost:8080
+            callback-method: /mobile-card/callback

@@ -20,7 +20,7 @@ public class WalletUser {
     @Column(name = "address")
     public String address;
     @Column(name = "dob")
-    public Date dob;
+    public String dob;
     @Column(name = "full_name")
     public String fullName;
     @Column(name = "cmnd")
