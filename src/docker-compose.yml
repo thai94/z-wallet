@@ -30,6 +30,34 @@ services:
             wallet-network:
                 aliases:
                   - msb-bank-network
+    viettinbank:
+        container_name: bank-viettin-api
+        build: 
+            context: ./bank-viettin/
+            dockerfile: Dockerfile
+        ports: 
+            - "8082:8082"
+        restart: always
+        depends_on:
+            - database
+        networks:
+            wallet-network:
+                aliases:
+                  - viettin-bank-network
+    sacombank:
+        container_name: bank-sacom-api
+        build: 
+            context: ./bank-sacombank/
+            dockerfile: Dockerfile
+        ports: 
+            - "8083:8083"
+        restart: always
+        depends_on:
+            - database
+        networks:
+            wallet-network:
+                aliases:
+                  - sacom-bank-network
     database:
         container_name: zwallet-database
         image: mysql

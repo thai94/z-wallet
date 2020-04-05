@@ -303,6 +303,34 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "bank-mapping-support-bank",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userid\":\"1584784717714\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/bank-mapping/support-bank",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"bank-mapping",
+								"support-bank"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -534,6 +562,298 @@
 							"port": "8081",
 							"path": [
 								"msb",
+								"cash-out"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sacom-bank",
+			"description": "",
+			"item": [
+				{
+					"name": "sacombank-pay",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"banktoken\": \"0365590786:4344baa2e1ebbc2a\",\n\t\"cardnumber\": \"5019717010103742\",\n\t\"transactionid\": \"15\",\n\t\"amount\": \"100\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/sacombank/pay",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"sacombank",
+								"pay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sacombank-link",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cardnumber\":\"5019717010103742\",\n\t\"cmnd\":\"312198889\",\n\t\"fullname\":\"NGUYEN VAN A\",\n\t\"phone\":\"0365590786\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/sacombank/link",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"sacombank",
+								"link"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sacombank-un-link",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cardnumber\":\"5019717010103742\",\n\t\"cmnd\":\"312198889\",\n\t\"banktoken\":\"0365590786:388c7617358ccee5\",\n\t\"phone\":\"0365590786\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/sacombank/un-link",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"sacombank",
+								"un-link"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sacombank-cash-in",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"banktoken\":\"0365590786:4344baa2e1ebbc2a\",\n\t\"cardnumber\":\"5019717010103742\",\n\t\"transactionid\":\"13\",\n\t\"amount\":\"99999999\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/sacombank/cash-in",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"sacombank",
+								"cash-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sacombank-cash-out",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"banktoken\": \"0365590786:4344baa2e1ebbc2a\",\n\t\"cardnumber\": \"5019717010103742\",\n\t\"transactionid\": \"14\",\n\t\"amount\": \"100\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8083/sacombank/cash-out",
+							"host": [
+								"localhost"
+							],
+							"port": "8083",
+							"path": [
+								"sacombank",
+								"cash-out"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "viet-tin-bank",
+			"description": "",
+			"item": [
+				{
+					"name": "viet-tin-pay",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"banktoken\": \"0365590786:2cb9a7f2124fb833\",\n\t\"cardnumber\": \"5019717010103742\",\n\t\"transactionid\": \"15\",\n\t\"amount\": \"100\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8082/viettin/pay",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"viettin",
+								"pay"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "viet-tin-link",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cardnumber\":\"5019717010103742\",\n\t\"cmnd\":\"312198889\",\n\t\"fullname\":\"NGUYEN VAN A\",\n\t\"phone\":\"0365590786\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8082/viettin/link",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"viettin",
+								"link"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "viet-tin-un-link",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cardnumber\":\"5019717010103742\",\n\t\"cmnd\":\"312198889\",\n\t\"banktoken\":\"0365590786:2cb9a7f2124fb833\",\n\t\"phone\":\"0365590786\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8082/viettin/un-link",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"viettin",
+								"un-link"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "viet-tin-cash-in",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"banktoken\":\"0365590786:2cb9a7f2124fb833\",\n\t\"cardnumber\":\"5019717010103742\",\n\t\"transactionid\":\"13\",\n\t\"amount\":\"99999999\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8082/viettin/cash-in",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"viettin",
+								"cash-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "viet-tin-cash-out",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"banktoken\": \"0365590786:2cb9a7f2124fb833\",\n\t\"cardnumber\": \"5019717010103742\",\n\t\"transactionid\": \"14\",\n\t\"amount\": \"100\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8082/viettin/cash-out",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"viettin",
 								"cash-out"
 							]
 						}

@@ -15,6 +15,14 @@ Install guide
 - Open folder: \z-wallet\src\bank-msb\
 - Open command-line
 - Run command: mvn package
+
+- Open folder: \z-wallet\src\bank-viettin\
+- Open command-line
+- Run command: mvn package
+
+- Open folder: \z-wallet\src\bank-sacombank\
+- Open command-line
+- Run command: mvn package
 ### 2. Run service
 - Open folder: \z-wallet\src
 - Open command-line
@@ -35,11 +43,13 @@ _________________________________________________________________
 ### 2. Install redis cache
 - Link: https://redis.io/
 
-### 3. Cai dat project: z-wallet & bank-msb
+### 3. Cai dat project: z-wallet, bank-msb, bank-viettin, bank-sacombank
 - Install java: https://www.oracle.com/java/technologies/javase-jdk8-downloads.html
 - Donwload intellij IDE (https://www.jetbrains.com/idea/download/#section=windows)
 - Import into intellij IDE
 - Run: Right click on file: BankMsbApplication then choose RUN
+- Run: Right click on file: BankVietTinApplication then choose RUN
+- Run: Right click on file: BankSacomApplication then choose RUN
 - Run: Right click on file: ZWalletApplication then choose RUN
 
 ### 4. Test API

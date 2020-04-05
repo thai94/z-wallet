@@ -22,11 +22,27 @@ bank:
         msb:
             base-url: http://localhost:8081
             link-method: /msb/link
-            un-link-method: msb/un-link
+            un-link-method: /msb/un-link
             pay-method: /msb/pay
             cash-in-method: /msb/cash-in
             cash-out-method: /msb/cash-out
             bank-name: MSB
+        vtb:
+            base-url: http://localhost:8082
+            link-method: /viettin/link
+            un-link-method: /viettin/un-link
+            pay-method: /viettin/pay
+            cash-in-method: /viettin/cash-in
+            cash-out-method: /viettin/cash-out
+            bank-name: Viet Tin Bank
+        scb:
+            base-url: http://localhost:8083
+            link-method: /sacombank/link
+            un-link-method: /sacombank/un-link
+            pay-method: /sacombank/pay
+            cash-in-method: /sacombank/cash-in
+            cash-out-method: /sacombank/cash-out
+            bank-name: Sacombank
 wallet:
     base-url: http://localhost:8080
     add-cash-method: /wallet/add-cash

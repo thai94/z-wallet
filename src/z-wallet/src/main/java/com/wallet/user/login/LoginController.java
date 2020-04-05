@@ -37,6 +37,11 @@ public class LoginController {
                 return response;
             }
             response.userid = user.userId;
+            response.phone = user.phone;
+            response.address = user.address;
+            response.dob = user.dob;
+            response.fullname = user.fullName;
+            response.cmnd = user.cmnd;
             response.returncode = ErrorCode.USER_PASSWORD_WRONG.getValue();
         } catch (Exception ex) {
             ex.printStackTrace();
