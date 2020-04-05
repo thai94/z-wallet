@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `bank_msb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `bank_msb`;
+CREATE DATABASE  IF NOT EXISTS `bank_viettin` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `bank_viettin`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: 10.0.0.200    Database: bank_msb
+-- Host: 10.0.0.200    Database: bank_viettin
 -- ------------------------------------------------------
 -- Server version	8.0.19
 
