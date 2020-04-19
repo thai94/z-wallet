@@ -139,15 +139,12 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1585459513151\",\n\t\"sourceoffund\":\"1\",\n\t\"bankcode\":\"\",\n\t\"f6cardno\":\"\",\n\t\"l4cardno\":\"\",\n\t\"amount\":\"100000\",\n\t\"pin\":\"123456\",\n\t\"servicetype\":\"1\"\n}"
+							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1587269909430\",\n\t\"sourceoffund\":\"1\",\n\t\"bankcode\":\"\",\n\t\"f6cardno\":\"\",\n\t\"l4cardno\":\"\",\n\t\"amount\":\"20000\",\n\t\"pin\":\"123456\",\n\t\"servicetype\":\"4\"\n}"
 						},
 						"url": {
-							"raw": "10.0.0.200:8080/charge-order/submit-trans",
+							"raw": "localhost:8080/charge-order/submit-trans",
 							"host": [
-								"10",
-								"0",
-								"0",
-								"200"
+								"localhost"
 							],
 							"port": "8080",
 							"path": [
@@ -1155,7 +1152,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"amount\":\"20000\",\n\t\"phone\":\"0365535076\",\n\t\"cardtype\":\"VT\"\n}"
+							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"amount\":\"20000\",\n\t\"cardtype\":\"VT\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/mobile-card/create-order",
@@ -1183,7 +1180,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1585817493051\"\n}"
+							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1587269909430\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/mobile-card/order-status",

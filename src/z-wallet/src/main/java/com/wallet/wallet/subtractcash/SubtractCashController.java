@@ -5,8 +5,11 @@ import com.wallet.database.entity.Wallet;
 import com.wallet.database.entity.WalletId;
 import com.wallet.database.repository.WalletRepository;
 import com.wallet.entity.BaseResponse;
+import com.wallet.utils.GsonUtils;
+import com.wallet.wallet.topic.WalletMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +22,9 @@ public class SubtractCashController {
 
     @Autowired
     WalletRepository walletRepository;
+
+    @Autowired
+    private SimpMessagingTemplate webSocket;
 
     @PostMapping("/wallet/subtract-cash")
     public BaseResponse subtractCash(@RequestBody SubtractCashRequest request) {
@@ -64,6 +70,10 @@ public class SubtractCashController {
             newWallet.balance = amount;
             newWallet.updateDate = new Timestamp(System.currentTimeMillis());
             walletRepository.save(newWallet);
+
+            // send websocket msg
+            String socketMsg = GsonUtils.toJsonString(new WalletMessage(newWallet.id.userId, newWallet.balance));
+            webSocket.convertAndSend("/ws/topic/updated_wallet", socketMsg);
 
             response.returncode = ErrorCode.SUCCESS.getValue();
             return response;

@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 
 public final class GsonUtils {
 
-    public final Gson gson = new Gson();
+    public static final Gson gson = new Gson();
 
-    public String toJsonString(Object obj) {
+    public static String toJsonString(Object obj) {
         return gson.toJson(obj);
     }
 }
