@@ -113,8 +113,7 @@ DROP TABLE IF EXISTS `mobile_card_order`;
 CREATE TABLE `mobile_card_order` (
   `order_id` bigint NOT NULL,
   `amount` bigint DEFAULT NULL,
-  `card_type` varchar(45) DEFAULT NULL,
-  `phone` bigint DEFAULT NULL,
+  `card_type` varchar(45) DEFAULT NULL
   PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

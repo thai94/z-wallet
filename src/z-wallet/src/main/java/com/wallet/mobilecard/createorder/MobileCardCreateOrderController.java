@@ -44,11 +44,6 @@ public class MobileCardCreateOrderController {
                 return response;
             }
 
-            if(StringUtils.isEmpty(request.phone)) {
-                response.returncode = ErrorCode.VALIDATE_PHONE_INVALID.getValue();
-                return response;
-            }
-
             if(StringUtils.isEmpty(request.cardtype)) {
                 response.returncode = ErrorCode.VALIDATE_CARD_TYPE_INVALID.getValue();
                 return response;
@@ -75,7 +70,6 @@ public class MobileCardCreateOrderController {
             mobileCardEntity.id = Long.valueOf(GenId.genId());
             mobileCardEntity.userid = request.userid;
             mobileCardEntity.amount = request.amount;
-            mobileCardEntity.phone = request.phone;
             mobileCardEntity.cardtype = request.cardtype;
             mobileCardEntity.status = ErrorCode.PROCESSING.getValue();
 

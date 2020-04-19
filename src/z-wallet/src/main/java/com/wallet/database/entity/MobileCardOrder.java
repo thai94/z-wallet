@@ -19,6 +19,4 @@ public class MobileCardOrder {
     public long amount;
     @Column(name = "card_type")
     public String cardType;
-    @Column(name = "phone")
-    public String phone;
 }

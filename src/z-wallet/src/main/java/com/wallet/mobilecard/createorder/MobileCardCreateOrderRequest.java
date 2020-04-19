@@ -8,6 +8,5 @@ import java.io.Serializable;
 public class MobileCardCreateOrderRequest implements Serializable {
     public String userid;
     public long amount;
-    public String phone;
     public String cardtype;
 }

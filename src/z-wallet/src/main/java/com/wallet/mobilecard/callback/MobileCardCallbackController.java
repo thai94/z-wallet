@@ -8,7 +8,6 @@ import com.wallet.database.entity.MobileCardOrder;
 import com.wallet.database.repository.MobileCardOrderRepository;
 import com.wallet.database.repository.MobileCardRepository;
 import com.wallet.entity.BaseResponse;
-import com.wallet.mobilecard.createorder.MobileCardCreateOrderResponse;
 import com.wallet.moneytransfer.callback.MoneyTransferCallbackRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,7 +55,6 @@ public class MobileCardCallbackController {
             mobileCard.orderId = mobileCardEntity.id;
             mobileCardRepository.save(mobileCard);
 
-
             mobileCardEntity.status = ErrorCode.SUCCESS.getValue();
             mobileCardEntity.cardNumber = mobileCard.cardNumber;
             mobileCardEntity.seriNumber = mobileCard.seriNumber;
@@ -66,7 +64,6 @@ public class MobileCardCallbackController {
             mobileCardOrder.orderId = mobileCardEntity.id;
             mobileCardOrder.amount = mobileCardEntity.amount;
             mobileCardOrder.cardType = mobileCardEntity.cardtype;
-            mobileCardOrder.phone = mobileCardEntity.phone;
 
             mobileCardOrderRepository.save(mobileCardOrder);
 

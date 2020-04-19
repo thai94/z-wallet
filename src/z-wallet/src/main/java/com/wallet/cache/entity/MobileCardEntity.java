@@ -11,7 +11,6 @@ public class MobileCardEntity {
     public long id;
     public String userid;
     public long amount;
-    public String phone;
     public String cardtype;
 
     public String cardNumber;
