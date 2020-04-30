@@ -105,7 +105,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"pin\":\"\",\n\t\"cmnd\":\"\",\n\t\"address\":\"HCM\",\n\t\"dob\":\"\"\n}"
+							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"pin\":\"\",\n\t\"cmnd\":\"\",\n\t\"address\":\"HCM\",\n\t\"dob\":\"01/02/2001\",\n\t\"cmndfontimg\":\"a55ceff4-fc76-4fc8-b093-f973e10f560b\",\n\t\"cmndbackimg\":\"a55ceff4-fc76-4fc8-b093-f973e10f560b\",\n\t\"avatar\":\"a55ceff4-fc76-4fc8-b093-f973e10f560b\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/um/update-user",
@@ -195,7 +195,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"starttime\":\"1584882829859\",\n\t\"pagesize\":\"10\"\n}"
+							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"starttime\":\"1588251103693\",\n\t\"pagesize\":\"2\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/charge-order/history",
@@ -1118,7 +1118,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"transactionid\":\"100\",\n\t\"orderid\":\"1585400409439\"\n}"
+							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"transactionid\":\"103\",\n\t\"orderid\":\"1588255282925\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/p2p-transfer/callback",
@@ -1220,6 +1220,195 @@
 								"",
 								"mobile-card",
 								"callback"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "files",
+			"description": "",
+			"item": [
+				{
+					"name": "upload-file",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"value": "",
+									"description": "",
+									"type": "file"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/files/upload-file",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"files",
+								"upload-file"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "download-file",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "localhost:8080/files/download/65a31b9a-503f-4d21-9d13-c2bf710fff09",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"files",
+								"download",
+								"65a31b9a-503f-4d21-9d13-c2bf710fff09"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view-image",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:8080/files/view-image/1a437f08-b0b1-43b5-8c37-d3390201b845",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"files",
+								"view-image",
+								"1a437f08-b0b1-43b5-8c37-d3390201b845"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"description": "",
+			"item": [
+				{
+					"name": "user",
+					"description": "",
+					"item": [
+						{
+							"name": "search-user",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"userid\":\"\",\n\t\"fullname\":\"\",\n\t\"phone\":\"\",\n\t\"cmnd\":\"\",\n\t\"address\":\"\",\n\t\"verify\":\"\"\n}"
+								},
+								"url": {
+									"raw": "localhost:8080/admin/user/list",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"user",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "verify-user",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"status\":\"2\",\n\t\"comment\":\"AAAAAAAAA\"\n}"
+								},
+								"url": {
+									"raw": "localhost:8080/admin/user/verify",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"user",
+										"verify"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "notify",
+			"description": "",
+			"item": [
+				{
+					"name": "notify-history",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"starttime\":\"1688254124863\",\n\t\"pagesize\":\"10\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/notify/history",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"notify",
+								"history"
 							]
 						}
 					},
