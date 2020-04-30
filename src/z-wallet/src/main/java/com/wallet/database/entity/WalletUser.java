@@ -31,4 +31,6 @@ public class WalletUser {
     public String cmndFontImg; // file-id
     public String cmndBackImg; // file-id
     public String avatar; // file-id
+
+    public int verify = 0; // 0: not verified yet, 1: verified, 2: rejected
 }
