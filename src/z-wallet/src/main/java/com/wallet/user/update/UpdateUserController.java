@@ -31,20 +31,32 @@ public class UpdateUserController {
 
             WalletUser walletUser = walletUserOptional.get();
 
-            if(!StringUtils.isEmpty(request.pin)) {
+            if(StringUtils.isNotEmpty(request.pin)) {
                 walletUser.pin =  request.pin;
             }
 
-            if(!StringUtils.isEmpty(request.cmnd)) {
+            if(StringUtils.isNotEmpty(request.cmnd)) {
                 walletUser.cmnd = request.cmnd;
             }
 
-            if(!StringUtils.isEmpty(request.address)) {
+            if(StringUtils.isNotEmpty(request.address)) {
                 walletUser.address = request.address;
             }
 
-            if(!StringUtils.isEmpty(request.dob)) {
+            if(StringUtils.isNotEmpty(request.dob)) {
                 walletUser.dob = request.dob;
+            }
+
+            if(StringUtils.isNotEmpty(request.cmndfontimg)) {
+                walletUser.cmndFontImg = request.cmndfontimg;
+            }
+
+            if(StringUtils.isNotEmpty(request.cmndbackimg)) {
+                walletUser.cmndBackImg = request.cmndbackimg;
+            }
+
+            if(StringUtils.isNotEmpty(request.avatar)) {
+                walletUser.avatar = request.avatar;
             }
 
             walletUserRespository.save(walletUser);

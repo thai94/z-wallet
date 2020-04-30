@@ -27,4 +27,8 @@ public class WalletUser {
     public String cmnd;
     @Column(name = "pin")
     public String pin;
+
+    public String cmndFontImg; // file-id
+    public String cmndBackImg; // file-id
+    public String avatar; // file-id
 }

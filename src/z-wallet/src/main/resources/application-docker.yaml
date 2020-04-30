@@ -17,6 +17,13 @@ spring:
         client-name: zwallet
         host: cache-network
         port: 6379
+    servlet:
+        multipart:
+            enabled: true
+            max-file-size: 200MB
+            max-request-size: 215MB
+file:
+    upload-dir: ./uploads
 bank:
     connector:
         msb:
