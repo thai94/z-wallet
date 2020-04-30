@@ -9,7 +9,8 @@ public class TransactionEntity {
     public long transactionid;
     public long orderid;
     public int sourceoffund;
-    public Timestamp chargetime;
+    public String chargetime;
     public long amount;
     public int servicetype;
+    public long timemilliseconds;
 }

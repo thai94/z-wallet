@@ -1,12 +1,17 @@
 package com.wallet.bankmapping.link;
 
 import com.wallet.constant.ErrorCode;
+import com.wallet.constant.Service;
+import com.wallet.constant.SupportBank;
 import com.wallet.database.entity.BankMapping;
 import com.wallet.database.entity.BankMappingId;
+import com.wallet.database.entity.UserNotify;
 import com.wallet.database.repository.BankMappingRespository;
 import com.wallet.entity.BaseResponse;
+import com.wallet.notify.send.SendNotifyService;
 import com.wallet.properties.BankConfig;
 import com.wallet.properties.BankProperties;
+import com.wallet.utils.GsonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +31,9 @@ public class LinkController {
 
     @Autowired
     BankMappingRespository bankMappingRespository;
+
+    @Autowired
+    SendNotifyService sendNotifyService;
 
     @PostMapping("/bank-mapping/link")
     public BaseResponse link(@RequestBody LinkRequest request) {
@@ -84,6 +92,7 @@ public class LinkController {
                 return response;
             }
 
+            // fail
             BankLinkResponse bankLinkResponse = bankResponse.getBody();
             if(bankLinkResponse.returncode != ErrorCode.SUCCESS.getValue()) {
                 response.returncode = ErrorCode.SUCCESS.getValue();
@@ -91,6 +100,7 @@ public class LinkController {
                 return response;
             }
 
+            // success
             Optional<BankMapping> bankMappingOpt = bankMappingRespository.findById(new BankMappingId(request.userid, request.cardno));
             if(!bankMappingOpt.isPresent()) {
                 BankMapping bankMapping = new BankMapping();
@@ -108,6 +118,24 @@ public class LinkController {
 
                 response.returncode = ErrorCode.SUCCESS.getValue();
                 response.bankreturncode = bankLinkResponse.returncode;
+
+
+                // notify
+                UserNotify notify = new UserNotify();
+                notify.notifyId = System.currentTimeMillis();
+                notify.userId = request.userid;
+                notify.serviceType = Service.LINK_CARD.getKey();
+                notify.title = String.format("Liên kết ngân hàng %s", SupportBank.fromValue(request.bankcode).getBankName());
+
+                LinkBankNotifyTemplate linkBankNotifyTemplate = new LinkBankNotifyTemplate();
+                linkBankNotifyTemplate.bankCode = request.bankcode;
+                linkBankNotifyTemplate.first6CardNo = request.cardno.substring(0,6);
+                linkBankNotifyTemplate.last6CardNo = request.cardno.substring(request.cardno.length() - 4);
+
+                notify.content = GsonUtils.toJsonString(linkBankNotifyTemplate);
+                notify.createDate = System.currentTimeMillis();
+                sendNotifyService.send(notify);
+
                 return response;
             }
 
@@ -117,9 +145,25 @@ public class LinkController {
             bankMappingRespository.save(bankMapping);
             response.returncode = ErrorCode.SUCCESS.getValue();
             response.bankreturncode = bankLinkResponse.returncode;
+
+            // notify
+            UserNotify notify = new UserNotify();
+            notify.notifyId = System.currentTimeMillis();
+            notify.userId = request.userid;
+            notify.serviceType = Service.LINK_CARD.getKey();
+            notify.title = String.format("Liên kết ngân hàng %s", SupportBank.fromValue(request.bankcode).getBankName());
+
+            LinkBankNotifyTemplate linkBankNotifyTemplate = new LinkBankNotifyTemplate();
+            linkBankNotifyTemplate.bankCode = request.bankcode;
+            linkBankNotifyTemplate.first6CardNo = request.cardno.substring(0,6);
+            linkBankNotifyTemplate.last6CardNo = request.cardno.substring(request.cardno.length() - 4);
+
+            notify.content = GsonUtils.toJsonString(linkBankNotifyTemplate);
+            notify.status = 1; // new
+            notify.createDate = System.currentTimeMillis();
+            sendNotifyService.send(notify);
+
             return response;
-
-
         } catch (Exception ex) {
             ex.printStackTrace();
             response.returncode = ErrorCode.EXCEPTION.getValue();

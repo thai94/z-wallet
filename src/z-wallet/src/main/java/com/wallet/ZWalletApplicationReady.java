@@ -39,6 +39,7 @@ public class ZWalletApplicationReady {
                 .get(1, SECONDS);
 
         session.subscribe(WEBSOCKET_TOPIC, new DefaultStompFrameHandler());
+        session.subscribe("/ws/topic/notify_1584784717714", new DefaultStompFrameHandler());
     }
 
     class DefaultStompFrameHandler implements StompFrameHandler {

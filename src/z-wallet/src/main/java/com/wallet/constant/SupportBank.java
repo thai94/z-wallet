@@ -16,4 +16,13 @@ public enum SupportBank {
         this.bankCode = bankCode;
         this.bankName = bankName;
     }
+
+    public static SupportBank fromValue(String bankCode) {
+        for (SupportBank supportBank: SupportBank.values()) {
+            if(supportBank.bankCode.equals(bankCode)) {
+                return supportBank;
+            }
+        }
+        return null;
+    }
 }

@@ -1,13 +1,18 @@
 package com.wallet.bankmapping.unlink;
 
 import com.wallet.constant.ErrorCode;
+import com.wallet.constant.Service;
+import com.wallet.constant.SupportBank;
 import com.wallet.database.entity.BankMapping;
+import com.wallet.database.entity.UserNotify;
 import com.wallet.database.entity.WalletUser;
 import com.wallet.database.repository.BankMappingRespository;
 import com.wallet.database.repository.WalletUserRespository;
 import com.wallet.entity.BaseResponse;
+import com.wallet.notify.send.SendNotifyService;
 import com.wallet.properties.BankConfig;
 import com.wallet.properties.BankProperties;
+import com.wallet.utils.GsonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +35,9 @@ public class UnlinkController {
 
     @Autowired
     WalletUserRespository walletUserRespository;
+
+    @Autowired
+    SendNotifyService sendNotifyService;
 
     @PostMapping("/bank-mapping/unlink")
     public BaseResponse unlink(@RequestBody UnlinkRequest request) {
@@ -90,6 +98,7 @@ public class UnlinkController {
                 return response;
             }
 
+            // fail
             BankUnlinkResponse bankUnlinkResponse = bankResponse.getBody();
             if(bankUnlinkResponse.returncode != ErrorCode.SUCCESS.getValue()) {
                 response.returncode = ErrorCode.SUCCESS.getValue();
@@ -97,11 +106,30 @@ public class UnlinkController {
                 return response;
             }
 
+            // success
             bankMapping.status = 2;
             bankMappingRespository.save(bankMapping);
 
             response.returncode = ErrorCode.SUCCESS.getValue();
             response.bankreturncode = bankUnlinkResponse.returncode;
+
+            // notify
+            UserNotify notify = new UserNotify();
+            notify.notifyId = System.currentTimeMillis();
+            notify.userId = request.userid;
+            notify.serviceType = Service.UN_LINK_CARD.getKey();
+            notify.title = String.format("Hủy liên kết ngân hàng %s", SupportBank.fromValue(request.bankcode).getBankName());
+
+            UnlinkBankNotifyTemplate unlinkBankNotifyTemplate = new UnlinkBankNotifyTemplate();
+            unlinkBankNotifyTemplate.bankCode = request.bankcode;
+            unlinkBankNotifyTemplate.first6CardNo = request.f6cardno;
+            unlinkBankNotifyTemplate.last6CardNo = request.l4cardno;
+
+            notify.content = GsonUtils.toJsonString(unlinkBankNotifyTemplate);
+            notify.status = 1; // new
+            notify.createDate = System.currentTimeMillis();
+            sendNotifyService.send(notify);
+
             return response;
 
         } catch (Exception ex) {

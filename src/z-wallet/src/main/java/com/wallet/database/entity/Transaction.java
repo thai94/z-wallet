@@ -23,7 +23,7 @@ public class Transaction {
     @Column(name = "source_of_fund")
     public int sourceOfFund;
     @Column(name = "charge_time")
-    public Timestamp chargeTime;
+    public long chargeTime;
     @Column(name = "amount")
     public long amount;
     @Column(name = "status")

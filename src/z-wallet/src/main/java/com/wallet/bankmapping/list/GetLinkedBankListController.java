@@ -27,7 +27,7 @@ public class GetLinkedBankListController {
                 response.returncode = ErrorCode.VALIDATE_USER_ID_INVALID.getValue();
                 return response;
             }
-            List<BankMapping> bankMappings = bankMappingRespository.findAllByIdUserid(request.userid);
+            List<BankMapping> bankMappings = bankMappingRespository.findAllByIdUseridAndStatus(request.userid, 1);
             if(bankMappings.isEmpty()) {
                 response.returncode = ErrorCode.SUCCESS.getValue();
                 return response;

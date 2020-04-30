@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface BankMappingRespository extends JpaRepository<BankMapping, BankMappingId> {
     public BankMapping findOneByIdUseridAndF6cardnoAndL4cardno(String userid, String f6cardno, String l4cardno);
-    public List<BankMapping> findAllByIdUserid(String userId);
+    public List<BankMapping> findAllByIdUseridAndStatus(String userId, int status);
 }

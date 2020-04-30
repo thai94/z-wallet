@@ -3,12 +3,16 @@ package com.wallet.moneytransfer.callback;
 import com.wallet.cache.entity.MoneyTransferEntity;
 import com.wallet.cache.repository.MoneyTransferCacheRepository;
 import com.wallet.constant.ErrorCode;
+import com.wallet.constant.Service;
 import com.wallet.database.entity.MoneyTransferOrder;
+import com.wallet.database.entity.UserNotify;
 import com.wallet.database.entity.WalletUser;
 import com.wallet.database.repository.MoneyTransferOrderRepository;
 import com.wallet.database.repository.WalletUserRespository;
 import com.wallet.entity.BaseResponse;
+import com.wallet.notify.send.SendNotifyService;
 import com.wallet.properties.WalletProperties;
+import com.wallet.utils.GsonUtils;
 import com.wallet.wallet.addcash.AddCashRequest;
 import com.wallet.wallet.addcash.AddCashResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +40,9 @@ public class MoneyTransferCallbackController {
     @Autowired
     WalletProperties walletConfig;
 
+    @Autowired
+    SendNotifyService sendNotifyService;
+
     @PostMapping("/p2p-transfer/callback")
     public BaseResponse callback(@RequestBody MoneyTransferCallbackRequest request) {
         MoneyTransferCallbackResponse response = new MoneyTransferCallbackResponse();
@@ -47,10 +54,10 @@ public class MoneyTransferCallbackController {
             }
             MoneyTransferEntity moneyTransferEntity = moneyTransferEntityOptional.get();
 
-            WalletUser walletUser = walletUserRespository.findWalletUserByPhone(moneyTransferEntity.getReceiverphone());
+            WalletUser receiverWalletUser = walletUserRespository.findWalletUserByPhone(moneyTransferEntity.getReceiverphone());
 
             AddCashRequest addCashRequest = new AddCashRequest();
-            addCashRequest.userid = walletUser.userId;
+            addCashRequest.userid = receiverWalletUser.userId;
             addCashRequest.amount = moneyTransferEntity.getAmount();
             addCashRequest.transactionid = Long.valueOf(request.transactionid);
 
@@ -65,12 +72,14 @@ public class MoneyTransferCallbackController {
             moneyTransferEntity.status = responseEntity.getBody().returncode;
             moneyTransferCacheRepository.save(moneyTransferEntity);
 
+            // fail
             if(responseEntity.getBody().returncode != 1) {
                 response.returncode = responseEntity.getBody().returncode;
                 return response;
             }
 
-            // database
+            // success
+            // save database
             MoneyTransferOrder moneyTransferOrder = new MoneyTransferOrder();
             moneyTransferOrder.orderId = Long.valueOf(request.orderid);
             moneyTransferOrder.amount = moneyTransferEntity.amount;
@@ -79,6 +88,31 @@ public class MoneyTransferCallbackController {
             moneyTransferOrderRepository.save(moneyTransferOrder);
 
             response.returncode = responseEntity.getBody().returncode;
+
+            // notify
+
+            UserNotify notify = new UserNotify();
+            notify.notifyId = System.currentTimeMillis();
+            notify.userId = receiverWalletUser.userId;;
+            notify.serviceType = Service.MONEY_TRANSFER.getKey();
+
+            Optional<WalletUser> walletUserOptional = walletUserRespository.findById(request.userid);
+            WalletUser sendWalletUser = walletUserOptional.get();
+
+            notify.title = String.format("Nhận tiền từ %s", sendWalletUser.fullName);
+
+            MoneyTransferNotifyTemplate moneyTransferNotifyTemplate = new MoneyTransferNotifyTemplate();
+            moneyTransferNotifyTemplate.amount = moneyTransferEntity.amount;
+            moneyTransferNotifyTemplate.status = 1;
+            moneyTransferNotifyTemplate.orderid = request.orderid;
+            moneyTransferNotifyTemplate.transactionid = request.transactionid;
+            moneyTransferNotifyTemplate.sender = sendWalletUser.fullName;
+
+            notify.content = GsonUtils.toJsonString(moneyTransferNotifyTemplate);
+            notify.status = 1; // new
+            notify.createDate = System.currentTimeMillis();
+            sendNotifyService.send(notify);
+
             return response;
 
         } catch (Exception ex) {

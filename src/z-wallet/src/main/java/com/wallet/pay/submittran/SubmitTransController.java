@@ -132,7 +132,7 @@ public class SubmitTransController {
             transaction.orderId = request.orderid;
             transaction.userId = request.userid;
             transaction.sourceOfFund = request.sourceoffund;
-            transaction.chargeTime = new Timestamp(System.currentTimeMillis());
+            transaction.chargeTime = System.currentTimeMillis();
             transaction.amount = request.amount;
             transaction.serviceType = request.servicetype;
 

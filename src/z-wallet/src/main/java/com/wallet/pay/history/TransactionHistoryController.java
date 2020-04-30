@@ -13,6 +13,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -30,10 +32,10 @@ public class TransactionHistoryController {
         TransactionHistoryResponse response = new TransactionHistoryResponse();
 
         try {
-             Query query = entityManager.createQuery("SELECT p FROM Transaction p WHERE p.userId =:userid and p.chargeTime  <= :starttime ORDER BY p.chargeTime DESC",
+             Query query = entityManager.createQuery("SELECT p FROM Transaction p WHERE p.userId =:userid and p.chargeTime <= :starttime ORDER BY p.chargeTime DESC",
                     Transaction.class);
             query.setParameter("userid", request.userid);
-             query.setParameter("starttime", new Timestamp(request.starttime));
+             query.setParameter("starttime", request.starttime);
              query.setMaxResults(request.pagesize);
              List<Transaction> resultList = query.getResultList();
              if(resultList.isEmpty()) {
@@ -46,9 +48,15 @@ public class TransactionHistoryController {
                  transactionEntity.transactionid = transaction.transactionId;
                  transactionEntity.orderid = transaction.orderId;
                  transactionEntity.sourceoffund = transaction.sourceOfFund;
-                 transactionEntity.chargetime = transaction.chargeTime;
+
+                 Date date = new Date();
+                 date.setTime(transaction.chargeTime);
+                 String formattedDate = new SimpleDateFormat("dd/MM/yyyy HH:mm").format(date);
+                 transactionEntity.chargetime = formattedDate;
+
                  transactionEntity.amount = transaction.amount;
                  transactionEntity.servicetype  = transaction.serviceType;
+                 transactionEntity.timemilliseconds = transaction.chargeTime;
 
                  response.histories.add(transactionEntity);
              }

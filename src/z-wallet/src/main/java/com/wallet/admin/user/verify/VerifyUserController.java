@@ -1,11 +1,15 @@
 package com.wallet.admin.user.verify;
 
 import com.wallet.constant.ErrorCode;
+import com.wallet.constant.Service;
+import com.wallet.constant.SupportBank;
+import com.wallet.database.entity.UserNotify;
 import com.wallet.database.entity.WalletUser;
 import com.wallet.database.repository.WalletUserRespository;
+import com.wallet.notify.send.SendNotifyService;
+import com.wallet.utils.GsonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +21,9 @@ public class VerifyUserController {
 
     @Autowired
     WalletUserRespository walletUserRespository;
+
+    @Autowired
+    SendNotifyService sendNotifyService;
 
     @PostMapping("/admin/user/verify")
     public VerifyUserResponse verifyUser(@RequestBody VerifyUserRequest request) {
@@ -47,6 +54,21 @@ public class VerifyUserController {
                 user.setVerify(2); // rejected\
                 walletUserRespository.save(user);
                 response.returncode = ErrorCode.SUCCESS.getValue();
+
+                // notify
+                UserNotify notify = new UserNotify();
+                notify.notifyId = System.currentTimeMillis();
+                notify.userId = request.userid;
+                notify.serviceType = Service.VERIFY_USER.getKey();
+                notify.title = "Xác thực thông tin tài khoản thất bại";
+
+                VerifyUserNotifyTemplate verifyUserNotifyTemplate = new VerifyUserNotifyTemplate();
+                verifyUserNotifyTemplate.status = request.status;
+                verifyUserNotifyTemplate.comment = request.comment;
+
+                notify.content = GsonUtils.toJsonString(verifyUserNotifyTemplate);
+                notify.createDate = System.currentTimeMillis();
+                sendNotifyService.send(notify);
                 return response;
             }
 
@@ -100,6 +122,23 @@ public class VerifyUserController {
             user.setVerify(1); // verified
             walletUserRespository.save(user);
             response.returncode = ErrorCode.SUCCESS.getValue();
+
+
+            // notify
+            UserNotify notify = new UserNotify();
+            notify.notifyId = System.currentTimeMillis();
+            notify.userId = request.userid;
+            notify.serviceType = Service.VERIFY_USER.getKey();
+            notify.title = "Xác thực thông tin tài khoản thành công";
+
+            VerifyUserNotifyTemplate verifyUserNotifyTemplate = new VerifyUserNotifyTemplate();
+            verifyUserNotifyTemplate.status = request.status;
+            verifyUserNotifyTemplate.comment = request.comment;
+
+            notify.content = GsonUtils.toJsonString(verifyUserNotifyTemplate);
+            notify.createDate = System.currentTimeMillis();
+            sendNotifyService.send(notify);
+
             return response;
 
         } catch (Exception ex) {

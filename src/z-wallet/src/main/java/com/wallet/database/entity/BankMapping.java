@@ -28,5 +28,5 @@ public class BankMapping {
     @Column(name = "bank_code")
     public String bankCode;
     @Column(name = "status")
-    public int status;
+    public int status; // 1. link, 2: unlink
 }
