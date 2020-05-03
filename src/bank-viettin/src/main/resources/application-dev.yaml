@@ -13,3 +13,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+security:
+  api:
+    secret-key: bank-vtb-dHAIA5I6ja
+    salt: nVuLSZjAYD

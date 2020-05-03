@@ -1,5 +1,6 @@
 package com.wallet.bankmapping.unlink;
 
+import com.wallet.configuration.SecureHttpConverter;
 import com.wallet.constant.ErrorCode;
 import com.wallet.constant.Service;
 import com.wallet.constant.SupportBank;
@@ -17,11 +18,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -91,6 +95,9 @@ public class UnlinkController {
             bankUnlinkRequest.phone = walletUserOpt.get().phone;
 
             RestTemplate restTemplate = new RestTemplate();
+            List<HttpMessageConverter<?>> converterList = new ArrayList<>();
+            converterList.add(new SecureHttpConverter(bankConfig.secretKey, bankConfig.salt));
+            restTemplate.setMessageConverters(converterList);
             ResponseEntity<BankUnlinkResponse> bankResponse = restTemplate.postForEntity(bankConfig.baseUrl + bankConfig.unLinkMethod, bankUnlinkRequest, BankUnlinkResponse.class);
             // check response
             if(bankResponse.getStatusCode() != HttpStatus.OK) {

@@ -32,8 +32,8 @@ public class LoginController {
             }
 
             WalletUser user = walletUserRespository.findWalletUserByPhoneAndPin(dataRequest.phone, dataRequest.pin);
-            if(user != null) {
-                response.returncode = ErrorCode.SUCCESS.getValue();
+            if(user == null) {
+                response.returncode = ErrorCode.USER_PASSWORD_WRONG.getValue();
                 return response;
             }
             response.userid = user.userId;
@@ -42,7 +42,12 @@ public class LoginController {
             response.dob = user.dob;
             response.fullname = user.fullName;
             response.cmnd = user.cmnd;
-            response.returncode = ErrorCode.USER_PASSWORD_WRONG.getValue();
+            response.cmndFontImg = user.cmndFontImg;
+            response.cmndBackImg = user.cmndBackImg;
+            response.avatar = user.avatar;
+            response.verify = user.verify;
+
+            response.returncode = ErrorCode.SUCCESS.getValue();
         } catch (Exception ex) {
             ex.printStackTrace();
             response.returncode = ErrorCode.EXCEPTION.getValue();

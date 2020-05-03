@@ -1,5 +1,6 @@
 package com.wallet.pay.submittran;
 
+import com.wallet.configuration.SecureHttpConverter;
 import com.wallet.constant.ErrorCode;
 import com.wallet.constant.Service;
 import com.wallet.database.entity.BankMapping;
@@ -17,12 +18,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -211,6 +215,9 @@ public class SubmitTransController {
                 bankPayRequest.amount = request.amount;
 
                 RestTemplate restTemplate = new RestTemplate();
+                List<HttpMessageConverter<?>> converterList = new ArrayList<>();
+                converterList.add(new SecureHttpConverter(bankConfig.secretKey, bankConfig.salt));
+                restTemplate.setMessageConverters(converterList);
                 ResponseEntity<BankPayResponse> responseEntity = restTemplate.postForEntity(bankConfig.baseUrl + bankConfig.payMethod, bankPayRequest, BankPayResponse.class);
 
                 if(responseEntity.getStatusCode() != HttpStatus.OK) {

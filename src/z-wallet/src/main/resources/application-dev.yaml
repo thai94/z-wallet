@@ -34,6 +34,8 @@ bank:
             cash-in-method: /msb/cash-in
             cash-out-method: /msb/cash-out
             bank-name: MSB
+            secret-key: bank-msb-dHAIA5I6ja
+            salt: nVuLSZjAYD
         vtb:
             base-url: http://localhost:8082
             link-method: /viettin/link
@@ -42,6 +44,8 @@ bank:
             cash-in-method: /viettin/cash-in
             cash-out-method: /viettin/cash-out
             bank-name: Viet Tin Bank
+            secret-key: bank-vtb-dHAIA5I6ja
+            salt: nVuLSZjAYD
         scb:
             base-url: http://localhost:8083
             link-method: /sacombank/link
@@ -50,6 +54,8 @@ bank:
             cash-in-method: /sacombank/cash-in
             cash-out-method: /sacombank/cash-out
             bank-name: Sacombank
+            secret-key: bank-scb-dHAIA5I6ja
+            salt: nVuLSZjAYD
 wallet:
     base-url: http://localhost:8080
     add-cash-method: /wallet/add-cash

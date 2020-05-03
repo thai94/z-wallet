@@ -11,4 +11,6 @@ public class BankConfig {
     public String cashInMethod;
     public String cashOutMethod;
     public String bankName;
+    public String secretKey;
+    public String salt;
 }
