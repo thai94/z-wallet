@@ -5,8 +5,11 @@ import com.wallet.cache.repository.MobileCardCacheRepository;
 import com.wallet.constant.ErrorCode;
 import com.wallet.database.entity.MobileCard;
 import com.wallet.database.entity.MobileCardOrder;
+import com.wallet.database.entity.TransactionHistory;
+import com.wallet.database.entity.TransactionHistoryId;
 import com.wallet.database.repository.MobileCardOrderRepository;
 import com.wallet.database.repository.MobileCardRepository;
+import com.wallet.database.repository.TransactionHistoryRepository;
 import com.wallet.entity.BaseResponse;
 import com.wallet.moneytransfer.callback.MoneyTransferCallbackRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.json.Json;
+import javax.json.JsonObject;
 import java.util.Optional;
 
 @RestController
@@ -27,6 +32,9 @@ public class MobileCardCallbackController {
 
     @Autowired
     MobileCardOrderRepository mobileCardOrderRepository;
+
+    @Autowired
+    TransactionHistoryRepository transactionHistoryRepository;
 
     @PostMapping("/mobile-card/callback")
     public BaseResponse callback(@RequestBody MoneyTransferCallbackRequest request) {
@@ -45,9 +53,27 @@ public class MobileCardCallbackController {
             MobileCard mobileCard =  mobileCardRepository.findTopOneByStatusAndAmount(1, mobileCardEntity.amount);
             if(mobileCard == null) {
                 response.returncode = ErrorCode.CHECK_CARD_NOT_AVALIBLE.getValue();
-                mobileCardEntity.status = ErrorCode.CHECK_CARD_NOT_AVALIBLE.getValue();
 
+                mobileCardEntity.status = ErrorCode.CHECK_CARD_NOT_AVALIBLE.getValue();
                 mobileCardCacheRepository.save(mobileCardEntity);
+
+
+                // TransactionHistory
+                TransactionHistoryId transactionHistoryId = new TransactionHistoryId(request.userid, Long.valueOf(request.transactionid));
+
+                Optional<TransactionHistory> transactionHistoryOptional = transactionHistoryRepository.findById(transactionHistoryId);
+                if(!transactionHistoryOptional.isPresent()) {
+                    return response;
+                }
+                TransactionHistory transactionHistory = transactionHistoryOptional.get();
+                transactionHistory.orderId = Long.valueOf(request.orderid);
+                transactionHistory.status = 1; // thanh cong
+                JsonObject txnDetailJsonObj = Json.createObjectBuilder()
+                        .add("cardType", mobileCardEntity.cardtype)
+                        .build();
+                transactionHistory.txndetail = txnDetailJsonObj.toString();
+
+                transactionHistoryRepository.save(transactionHistory);
                 return response;
             }
 
@@ -66,6 +92,25 @@ public class MobileCardCallbackController {
             mobileCardOrder.cardType = mobileCardEntity.cardtype;
 
             mobileCardOrderRepository.save(mobileCardOrder);
+
+            // TransactionHistory
+            TransactionHistoryId transactionHistoryId = new TransactionHistoryId(request.userid, Long.valueOf(request.transactionid));
+
+            Optional<TransactionHistory> transactionHistoryOptional = transactionHistoryRepository.findById(transactionHistoryId);
+            if(!transactionHistoryOptional.isPresent()) {
+                response.returncode = ErrorCode.SUCCESS.getValue();
+                return response;
+            }
+            TransactionHistory transactionHistory = transactionHistoryOptional.get();
+            transactionHistory.orderId = Long.valueOf(request.orderid);
+            transactionHistory.status = 1; // thanh cong
+            JsonObject txnDetailJsonObj = Json.createObjectBuilder()
+                    .add("cardType", mobileCardEntity.cardtype)
+                    .add("cardNumber", mobileCard.cardNumber)
+                    .build();
+            transactionHistory.txndetail = txnDetailJsonObj.toString();
+
+            transactionHistoryRepository.save(transactionHistory);
 
             response.returncode = ErrorCode.SUCCESS.getValue();
             return response;

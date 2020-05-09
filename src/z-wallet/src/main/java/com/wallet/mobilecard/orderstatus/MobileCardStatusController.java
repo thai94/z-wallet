@@ -3,7 +3,6 @@ package com.wallet.mobilecard.orderstatus;
 import com.wallet.cache.entity.MobileCardEntity;
 import com.wallet.cache.repository.MobileCardCacheRepository;
 import com.wallet.constant.ErrorCode;
-import com.wallet.database.repository.MobileCardRepository;
 import com.wallet.entity.BaseResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,8 +5,10 @@ import com.wallet.constant.ErrorCode;
 import com.wallet.constant.Service;
 import com.wallet.database.entity.BankMapping;
 import com.wallet.database.entity.Transaction;
+import com.wallet.database.entity.TransactionHistory;
 import com.wallet.database.entity.WalletUser;
 import com.wallet.database.repository.BankMappingRespository;
+import com.wallet.database.repository.TransactionHistoryRepository;
 import com.wallet.database.repository.TransactionRespository;
 import com.wallet.database.repository.WalletUserRespository;
 import com.wallet.entity.BaseResponse;
@@ -24,7 +26,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.sql.Timestamp;
+import javax.json.Json;
+import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -50,75 +53,15 @@ public class SubmitTransController {
     @Autowired
     CallbackProperties callbackProperties;
 
+    @Autowired
+    TransactionHistoryRepository transactionHistoryRepository;
+
     @PostMapping("/charge-order/submit-trans")
     public BaseResponse submitTrans(@RequestBody SubmitTransRequest request) {
         SubmitTransResponse response = new SubmitTransResponse();
         try {
             // validate
-            if(StringUtils.isEmpty(request.userid)) {
-                response.returncode = ErrorCode.VALIDATE_USER_ID_INVALID.getValue();
-                return response;
-            }
-
-            if(request.orderid <= 0) {
-                response.returncode = ErrorCode.VALIDATE_ORDER_ID_INVALID.getValue();
-                return response;
-            }
-
-            if(request.sourceoffund != 1 && request.sourceoffund != 2) {
-                response.returncode = ErrorCode.VALIDATE_SOURCE_OF_FUN_INVALID.getValue();
-                return response;
-            }
-
-            // ATM
-            if(request.sourceoffund == 2) {
-                if(StringUtils.isEmpty(request.bankcode)) {
-                    response.returncode = ErrorCode.VALIDATE_BANK_CODE_INVALID.getValue();
-                    return response;
-                }
-
-                if(StringUtils.isEmpty(request.f6cardno)) {
-                    response.returncode = ErrorCode.VALIDATE_F6CARD_NO_INVALID.getValue();
-                    return response;
-                }
-
-                if(StringUtils.isEmpty(request.l4cardno)) {
-                    response.returncode = ErrorCode.VALIDATE_L4CARD_NO_INVALID.getValue();
-                    return response;
-                }
-            }
-
-            if(request.amount <= 0) {
-                response.returncode = ErrorCode.VALIDATE_AMOUNT_INVALID.getValue();
-                return response;
-            }
-
-            if(request.servicetype <= 0) {
-                response.returncode = ErrorCode.VALIDATE_SERVICE_TYPE_INVALID.getValue();
-                return response;
-            }
-
-            if(StringUtils.isEmpty(request.pin)) {
-                response.returncode = ErrorCode.VALIDATE_PIN_INVALID.getValue();
-                return response;
-            }
-
-            Service service = Service.find(request.servicetype);
-            if(service == null) {
-                response.returncode = ErrorCode.CHECK_SERVICE_DOES_NOT_EXIST.getValue();
-                return response;
-            }
-
-            // varify pin
-            Optional<WalletUser> walletUserOptional = walletUserRespository.findById(request.userid);
-            if(!walletUserOptional.isPresent()) {
-                response.returncode = ErrorCode.USER_PIN_WRONG.getValue();
-                return response;
-            }
-
-            WalletUser walletUser = walletUserOptional.get();
-            if(!walletUser.pin.equals(request.pin)) {
-                response.returncode = ErrorCode.USER_PIN_WRONG.getValue();
+            if(!validateRequest(request, response)) {
                 return response;
             }
 
@@ -141,6 +84,7 @@ public class SubmitTransController {
             transaction.serviceType = request.servicetype;
 
 
+            Service service = Service.find(request.servicetype);
             // pay for wallet
             if(request.sourceoffund == 1) {
                 RestTemplate restTemplate = new RestTemplate();
@@ -166,6 +110,19 @@ public class SubmitTransController {
                     response.returncode = responseEntity.getBody().getReturncode();
                     return response;
                 }
+
+                // insert TransactionHistory
+                TransactionHistory transactionHistory = new TransactionHistory();
+                transactionHistory.id.userId = request.userid;
+                transactionHistory.id.transactionId = Long.valueOf(transactionId);
+                transactionHistory.orderId = request.orderid;
+                transactionHistory.amount = request.amount;
+                transactionHistory.serviceType = request.servicetype;
+                transactionHistory.sourceofFund = request.sourceoffund;
+                transactionHistory.timemilliseconds = System.currentTimeMillis();
+                transactionHistory.txndetail = "";
+
+                transactionHistoryRepository.saveAndFlush(transactionHistory);
 
                 // do callback
 
@@ -237,6 +194,22 @@ public class SubmitTransController {
                     return response;
                 }
 
+                // insert TransactionHistory
+                TransactionHistory transactionHistory = new TransactionHistory();
+                transactionHistory.id.userId = request.userid;
+                transactionHistory.id.transactionId = Long.valueOf(transactionId);
+                transactionHistory.orderId = 0;
+                transactionHistory.amount = request.amount;
+                transactionHistory.serviceType = request.servicetype;
+                transactionHistory.sourceofFund = request.sourceoffund;
+                transactionHistory.timemilliseconds = System.currentTimeMillis();
+                JsonObject txnDetailJsonObj = Json.createObjectBuilder()
+                        .add("bankName", bankConfig.getBankName())
+                        .add("cardNo", "***" + request.l4cardno).build();
+                transactionHistory.txndetail = txnDetailJsonObj.toString();
+
+                transactionHistoryRepository.save(transactionHistory);
+
                 // do callback
 
                 CallbackConfig callbackConfig = callbackProperties.service.get(service.getValue());
@@ -245,7 +218,8 @@ public class SubmitTransController {
                 callbackRequest.transactionid = Long.valueOf(transactionId);
                 callbackRequest.orderid = String.valueOf(request.orderid);
 
-                ResponseEntity<CallbackResponse> callbackResponseResponseEntity = restTemplate.postForEntity(callbackConfig.baseUrl + callbackConfig.callbackMethod, callbackRequest, CallbackResponse.class);
+                RestTemplate callBackRestTemplate = new RestTemplate();
+                ResponseEntity<CallbackResponse> callbackResponseResponseEntity = callBackRestTemplate.postForEntity(callbackConfig.baseUrl + callbackConfig.callbackMethod, callbackRequest, CallbackResponse.class);
                 if(callbackResponseResponseEntity.getStatusCode() != HttpStatus.OK) {
 
                     response.returncode = ErrorCode.CALL_BACK_FAIL.getValue();
@@ -266,5 +240,75 @@ public class SubmitTransController {
             return response;
         }
 
+    }
+
+    private boolean validateRequest(SubmitTransRequest request, SubmitTransResponse response) {
+        if(StringUtils.isEmpty(request.userid)) {
+            response.returncode = ErrorCode.VALIDATE_USER_ID_INVALID.getValue();
+            return false;
+        }
+
+        if(request.orderid <= 0) {
+            response.returncode = ErrorCode.VALIDATE_ORDER_ID_INVALID.getValue();
+            return false;
+        }
+
+        if(request.sourceoffund != 1 && request.sourceoffund != 2) {
+            response.returncode = ErrorCode.VALIDATE_SOURCE_OF_FUN_INVALID.getValue();
+            return false;
+        }
+
+        // ATM
+        if(request.sourceoffund == 2) {
+            if(StringUtils.isEmpty(request.bankcode)) {
+                response.returncode = ErrorCode.VALIDATE_BANK_CODE_INVALID.getValue();
+                return false;
+            }
+
+            if(StringUtils.isEmpty(request.f6cardno)) {
+                response.returncode = ErrorCode.VALIDATE_F6CARD_NO_INVALID.getValue();
+                return false;
+            }
+
+            if(StringUtils.isEmpty(request.l4cardno)) {
+                response.returncode = ErrorCode.VALIDATE_L4CARD_NO_INVALID.getValue();
+                return false;
+            }
+        }
+
+        if(request.amount <= 0) {
+            response.returncode = ErrorCode.VALIDATE_AMOUNT_INVALID.getValue();
+            return false;
+        }
+
+        if(request.servicetype <= 0) {
+            response.returncode = ErrorCode.VALIDATE_SERVICE_TYPE_INVALID.getValue();
+            return false;
+        }
+
+        if(StringUtils.isEmpty(request.pin)) {
+            response.returncode = ErrorCode.VALIDATE_PIN_INVALID.getValue();
+            return false;
+        }
+
+        Service service = Service.find(request.servicetype);
+        if(service == null) {
+            response.returncode = ErrorCode.CHECK_SERVICE_DOES_NOT_EXIST.getValue();
+            return false;
+        }
+
+        // varify pin
+        Optional<WalletUser> walletUserOptional = walletUserRespository.findById(request.userid);
+        if(!walletUserOptional.isPresent()) {
+            response.returncode = ErrorCode.USER_PIN_WRONG.getValue();
+            return false;
+        }
+
+        WalletUser walletUser = walletUserOptional.get();
+        if(!walletUser.pin.equals(request.pin)) {
+            response.returncode = ErrorCode.USER_PIN_WRONG.getValue();
+            return false;
+        }
+        return true;
     }
 }

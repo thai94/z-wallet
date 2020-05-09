@@ -1,7 +1,6 @@
 package com.wallet.notify.list;
 
 import com.wallet.constant.ErrorCode;
-import com.wallet.database.entity.Transaction;
 import com.wallet.database.entity.UserNotify;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.sql.Timestamp;
 import java.util.List;
 
 @RestController
@@ -19,7 +17,7 @@ public class UserNotifyListController {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @PostMapping("/notify/history")
+    @PostMapping("/notify/transactionhistory")
     public UserNotifyListResponse history(@RequestBody UserNotifyListRequest request) {
         UserNotifyListResponse response = new UserNotifyListResponse();
 

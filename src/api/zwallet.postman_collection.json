@@ -139,7 +139,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1587269909430\",\n\t\"sourceoffund\":\"1\",\n\t\"bankcode\":\"\",\n\t\"f6cardno\":\"\",\n\t\"l4cardno\":\"\",\n\t\"amount\":\"20000\",\n\t\"pin\":\"123456\",\n\t\"servicetype\":\"4\"\n}"
+							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1589024780657\",\n\t\"sourceoffund\":\"1\",\n\t\"bankcode\":\"\",\n\t\"f6cardno\":\"\",\n\t\"l4cardno\":\"\",\n\t\"amount\":\"20000\",\n\t\"pin\":\"123456\",\n\t\"servicetype\":\"4\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/charge-order/submit-trans",
@@ -167,7 +167,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1585450959375\",\n\t\"sourceoffund\":\"2\",\n\t\"bankcode\":\"msb\",\n\t\"f6cardno\":\"501971\",\n\t\"l4cardno\":\"3742\",\n\t\"amount\":\"100\",\n\t\"pin\":\"123456\",\n\t\"servicetype\":\"2\"\n}"
+							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1589024730637\",\n\t\"sourceoffund\":\"2\",\n\t\"bankcode\":\"msb\",\n\t\"f6cardno\":\"501971\",\n\t\"l4cardno\":\"3742\",\n\t\"amount\":\"100000\",\n\t\"pin\":\"123456\",\n\t\"servicetype\":\"4\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/charge-order/submit-trans",
@@ -178,34 +178,6 @@
 							"path": [
 								"charge-order",
 								"submit-trans"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "charge-order-history",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"starttime\":\"1588251103693\",\n\t\"pagesize\":\"2\"\n}"
-						},
-						"url": {
-							"raw": "localhost:8080/charge-order/history",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"charge-order",
-								"history"
 							]
 						}
 					},
@@ -878,12 +850,9 @@
 							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"f6cardno\":\"501971\",\n\t\"l4cardno\":\"3742\",\n\t\"bankcode\":\"msb\",\n\t\"amount\":\"100000\"\n}"
 						},
 						"url": {
-							"raw": "10.0.0.200:8080/withdraw/create-order",
+							"raw": "localhost:8080/withdraw/create-order",
 							"host": [
-								"10",
-								"0",
-								"0",
-								"200"
+								"localhost"
 							],
 							"port": "8080",
 							"path": [
@@ -906,15 +875,12 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1585459513151\"\n}"
+							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"orderid\":\"1588515714669\"\n}"
 						},
 						"url": {
-							"raw": "10.0.0.200:8080/withdraw/order-status",
+							"raw": "localhost:8080/withdraw/order-status",
 							"host": [
-								"10",
-								"0",
-								"0",
-								"200"
+								"localhost"
 							],
 							"port": "8080",
 							"path": [
@@ -1062,7 +1028,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"amount\":\"100000\",\n\t\"receiverphone\":\"0365535079\"\n}"
+							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"amount\":\"100000\",\n\t\"receiverphone\":\"0365535080\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/p2p-transfer/create-order",
@@ -1409,6 +1375,68 @@
 							"path": [
 								"notify",
 								"history"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transaction_history",
+			"description": "",
+			"item": [
+				{
+					"name": "charge-order-history-list",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"starttime\":\"1589024825222\",\n\t\"pagesize\":\"100\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/txn-history/list",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"txn-history",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "view-detail-transaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"transactionid\":\"1589023912166\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/txn-history/detail",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"txn-history",
+								"detail"
 							]
 						}
 					},

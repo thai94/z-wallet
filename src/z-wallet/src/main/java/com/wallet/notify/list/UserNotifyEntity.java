@@ -2,7 +2,6 @@ package com.wallet.notify.list;
 
 import com.wallet.database.entity.UserNotify;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

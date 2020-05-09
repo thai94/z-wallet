@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum Service {
-    CASH_OUT(1, "cashout"),
-    CASH_IN(2, "cashin"),
+    WITHDRAW(1, "withdraw"),
+    WALLET_TOPUP(2, "wallettopup"),
     MONEY_TRANSFER(3, "moneytransfer"),
     MOBILE_CARD(4, "mobilecard"),
     LINK_CARD(5, "linkCard"),

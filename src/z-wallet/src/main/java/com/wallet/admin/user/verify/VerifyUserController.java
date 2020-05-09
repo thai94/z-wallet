@@ -2,7 +2,6 @@ package com.wallet.admin.user.verify;
 
 import com.wallet.constant.ErrorCode;
 import com.wallet.constant.Service;
-import com.wallet.constant.SupportBank;
 import com.wallet.database.entity.UserNotify;
 import com.wallet.database.entity.WalletUser;
 import com.wallet.database.repository.WalletUserRespository;

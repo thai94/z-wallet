@@ -62,10 +62,10 @@ wallet:
     sub-tract-cash-method: /wallet/subtract-cash
 callback:
     service:
-        cashin:
+        wallettopup:
             base-url: http://z-wallet-network:8080
             callback-method: /wallet-topup/callback
-        cashout:
+        withdraw:
             base-url: http://z-wallet-network:8080
             callback-method: /withdraw/callback
         moneytransfer:
