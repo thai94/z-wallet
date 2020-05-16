@@ -9,7 +9,8 @@ public class UpdateUserRequest {
     public String userid;
 
     // update
-    public String pin;
+    public String pin; // HMAC26 and encrypted by key K
+    public String key; // Key K is encrypted by RSA
     public String cmnd;
     public String address;
     public String dob;

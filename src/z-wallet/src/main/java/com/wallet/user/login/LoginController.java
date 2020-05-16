@@ -4,11 +4,17 @@ import com.wallet.constant.ErrorCode;
 import com.wallet.database.entity.WalletUser;
 import com.wallet.database.repository.WalletUserRespository;
 import com.wallet.entity.BaseResponse;
+import com.wallet.utils.KeyStoreUtils;
+import com.wallet.utils.SecurityUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.crypto.spec.SecretKeySpec;
+import java.security.PrivateKey;
+import java.util.Base64;
 
 @RestController
 public class LoginController {
@@ -31,7 +37,19 @@ public class LoginController {
                 return response;
             }
 
-            WalletUser user = walletUserRespository.findWalletUserByPhoneAndPin(dataRequest.phone, dataRequest.pin);
+            if(StringUtils.isEmpty(dataRequest.key)) {
+                response.returncode = ErrorCode.VALIDATE_KEY_INVALID.getValue();
+                return response;
+            }
+
+            PrivateKey privateKey = KeyStoreUtils.readPrivateKey();
+
+            String clientKey = SecurityUtils.decryptRSA(privateKey, dataRequest.key);
+            SecretKeySpec clientKeySpec = new SecretKeySpec(Base64.getDecoder().decode(clientKey), "AES");
+
+            String pinHmac256 = SecurityUtils.decryptAES(clientKeySpec, dataRequest.pin);
+
+            WalletUser user = walletUserRespository.findWalletUserByPhoneAndPin(dataRequest.phone, pinHmac256);
             if(user == null) {
                 response.returncode = ErrorCode.USER_PASSWORD_WRONG.getValue();
                 return response;

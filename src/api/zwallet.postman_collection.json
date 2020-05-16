@@ -21,7 +21,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"fullname\": \"Nguyen Quoc Thai\",\r\n\"pin\": \"123456\",\r\n\"phone\":\"0365535079\"\r\n}"
+							"raw": "{\r\n\"fullname\": \"Nguyen Quoc Thai\",\r\n\"pin\": \"+DLQSSoxHxmcZShBeTLy3OR/lmq7exn3p42nAhkI7i+UmdZGqEUiDaCpTwIEyS/m\",\r\n\"phone\":\"0365535011\",\r\n\"key\": \"hnL+DzUgVc/y7iR+LWmyHD8jHMRaiht0JW0kCgZ8PjnhACpaoiY1HEE10PcRW9qfRzT9wOY0nCyM9IOG/y/SCbipmLzjInLPwapl8zdM7983QQQlTiRa+840zEDAirDRUznOCkaCHXoR6diDxT/AY4MFCvI8E/8jKz0a8M06WSbjWOlg0NhCPxHEWJJI8CabC7xaAzqNfDRxTJ5IAhkTQM1D2dt8y1aNjz+Smv6mwfVUo3izINT26RtCZ29058jZXumvrmsQmM00AF7ZID3UGpxNsNr3FOTRcputvsPUtZYjf0OkX+QXYeh6nlWONc6vjGeYpGVlIB8r0880ekgRhw==\"\r\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/um/register",
@@ -49,7 +49,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"phone\":\"0365535079\",\n\t\"pin\":\"123456\"\n}"
+							"raw": "{\n\t\"phone\":\"0365535011\",\n\t\"pin\":\"ReT8xjj4mUdUbSbbHs8MtLKR1LvVbuFJwcjLZetZaP0rCMekimwTYvbTJk4lJqQT\",\n\t\"key\":\"HeMJhERS+ZHgSAytGu/pEYzWIQj54jcTYwVhsiCZivxtinuPyhsFxuewO1xxxanIUThqH64/ALNX54r4TrBIHx8E7mtbgFs47jWFCGu6wDVMa+B9dBOWfLjxQB2TxKLWpRpQSGhF/ZG2zJZwfeyPUNPklqf7SrYl3jsnWrqdhzMx31hP7EIRnmY3rRpIWjkTxSqOBgH10Y/JqunZro2j8okaatF0gxZbUPeS/osXYclCxKzuJ3+NXOab12g4Sw/V4Yv/JIH8lzlUxqPlz++baRjW9mxmW7U1XQ3rIrZ76naYX1si52xGAlQde9rbW+9S9aoDrzjqJr9WNHdVLcGD3A==\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/um/login",
@@ -105,7 +105,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"pin\":\"\",\n\t\"cmnd\":\"\",\n\t\"address\":\"HCM\",\n\t\"dob\":\"01/02/2001\",\n\t\"cmndfontimg\":\"a55ceff4-fc76-4fc8-b093-f973e10f560b\",\n\t\"cmndbackimg\":\"a55ceff4-fc76-4fc8-b093-f973e10f560b\",\n\t\"avatar\":\"a55ceff4-fc76-4fc8-b093-f973e10f560b\"\n}"
+							"raw": "{\n\t\"userid\":\"1584784717714\",\n\t\"pin\":\"ReT8xjj4mUdUbSbbHs8MtLKR1LvVbuFJwcjLZetZaP0rCMekimwTYvbTJk4lJqQT\",\n\t\"key\":\"HeMJhERS+ZHgSAytGu/pEYzWIQj54jcTYwVhsiCZivxtinuPyhsFxuewO1xxxanIUThqH64/ALNX54r4TrBIHx8E7mtbgFs47jWFCGu6wDVMa+B9dBOWfLjxQB2TxKLWpRpQSGhF/ZG2zJZwfeyPUNPklqf7SrYl3jsnWrqdhzMx31hP7EIRnmY3rRpIWjkTxSqOBgH10Y/JqunZro2j8okaatF0gxZbUPeS/osXYclCxKzuJ3+NXOab12g4Sw/V4Yv/JIH8lzlUxqPlz++baRjW9mxmW7U1XQ3rIrZ76naYX1si52xGAlQde9rbW+9S9aoDrzjqJr9WNHdVLcGD3A==\",\n\t\"cmnd\":\"\",\n\t\"address\":\"HCM\",\n\t\"dob\":\"01/02/2001\",\n\t\"cmndfontimg\":\"a55ceff4-fc76-4fc8-b093-f973e10f560b\",\n\t\"cmndbackimg\":\"a55ceff4-fc76-4fc8-b093-f973e10f560b\",\n\t\"avatar\":\"a55ceff4-fc76-4fc8-b093-f973e10f560b\"\n}"
 						},
 						"url": {
 							"raw": "localhost:8080/um/update-user",

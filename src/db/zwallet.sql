@@ -282,7 +282,7 @@ CREATE TABLE `wallet_user` (
   `dob` varchar(50) DEFAULT NULL,
   `full_name` varchar(50) DEFAULT NULL,
   `cmnd` varchar(20) DEFAULT NULL,
-  `pin` varchar(6) DEFAULT NULL,
+  `pin` varchar(2048) DEFAULT NULL,
   `cmnd_font_img` varchar(128) DEFAULT NULL,
   `cmnd_back_img` varchar(128) DEFAULT NULL,
   `avatar` varchar(128) DEFAULT NULL,
@@ -299,7 +299,7 @@ CREATE TABLE `wallet_user` (
 
 LOCK TABLES `wallet_user` WRITE;
 /*!40000 ALTER TABLE `wallet_user` DISABLE KEYS */;
-INSERT INTO `wallet_user` VALUES ('1584784717714','0365535079','HCM','01/02/2001','Nguyen Quoc Thai','312198889','123456','a55ceff4-fc76-4fc8-b093-f973e10f560b','a55ceff4-fc76-4fc8-b093-f973e10f560b','a55ceff4-fc76-4fc8-b093-f973e10f560b',2),('1584784717715','0365535080','HCM','01/02/2001','Nguyen Quoc Thai','312198889','123456','a55ceff4-fc76-4fc8-b093-f973e10f560b','a55ceff4-fc76-4fc8-b093-f973e10f560b','a55ceff4-fc76-4fc8-b093-f973e10f560b',2);
+INSERT INTO `wallet_user` VALUES ('1584784717714','0365535079','HCM','01/02/2001','Nguyen Quoc Thai','312198889','ZWuOZ8Pg9P6kRIjxdQl8gi8FLN28tBdQzQJkp8YCMBc=','a55ceff4-fc76-4fc8-b093-f973e10f560b','a55ceff4-fc76-4fc8-b093-f973e10f560b','a55ceff4-fc76-4fc8-b093-f973e10f560b',2),('1584784717715','0365535080','HCM','01/02/2001','Nguyen Quoc Thai','312198889','123456','a55ceff4-fc76-4fc8-b093-f973e10f560b','a55ceff4-fc76-4fc8-b093-f973e10f560b','a55ceff4-fc76-4fc8-b093-f973e10f560b',2),('1589628537031','0365535011',NULL,NULL,'Nguyen Quoc Thai',NULL,'ZWuOZ8Pg9P6kRIjxdQl8gi8FLN28tBdQzQJkp8YCMBc=',NULL,NULL,NULL,0);
 /*!40000 ALTER TABLE `wallet_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -365,4 +365,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-05-09 18:49:00
+-- Dump completed on 2020-05-16 18:36:33
